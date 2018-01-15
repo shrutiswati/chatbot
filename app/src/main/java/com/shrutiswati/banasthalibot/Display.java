@@ -12,7 +12,7 @@ public class Display extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.display);
-        String username =getIntent().getStringExtra("Username");
+        String username =getIntent().getStringExtra("USERNAME");
         TextView tv=(TextView)findViewById(R.id.TVusername);
         tv.setText(username);
 
