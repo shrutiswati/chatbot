@@ -1,3 +1,4 @@
+/*
 package com.shrutiswati.banasthalibot;
 
 import android.content.ContentValues;
@@ -6,9 +7,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+*/
 /**
  * Created by shruti suman on 1/13/2018.
- */
+ *//*
+
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME="Register.db";
@@ -76,3 +79,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 }
+*/
