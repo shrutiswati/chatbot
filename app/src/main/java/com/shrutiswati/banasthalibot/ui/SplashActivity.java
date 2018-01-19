@@ -1,4 +1,4 @@
-package com.shrutiswati.banasthalibot;
+package com.shrutiswati.banasthalibot.ui;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,9 +6,10 @@ import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+import com.shrutiswati.banasthalibot.R;
+
+public class SplashActivity extends AppCompatActivity {
 
     private ImageView iv;
 
@@ -20,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         Animation myanim= AnimationUtils.loadAnimation(this,R.anim.mytransition);
 
         iv.startAnimation(myanim);
-        final Intent i=new Intent(this,Login.class);
+        final Intent i=new Intent(this,LoginActivity.class);
         Thread timer=new Thread(){
             public void run() {
                 try {

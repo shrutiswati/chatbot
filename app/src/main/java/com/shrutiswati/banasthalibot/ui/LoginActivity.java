@@ -1,20 +1,19 @@
-package com.shrutiswati.banasthalibot;
+package com.shrutiswati.banasthalibot.ui;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.shrutiswati.banasthalibot.R;
 import com.shrutiswati.banasthalibot.db.models.UserTable;
 
 import io.realm.Realm;
 
-public class Login extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,30 +35,30 @@ public class Login extends AppCompatActivity {
                     //user not found
                     realm.commitTransaction();
                     realm.close();
-                    Toast.makeText(Login.this, "User not found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "User not found", Toast.LENGTH_SHORT).show();
                     return;
                 } else if(user.getPassword().equals(pass)) {
                     //user found and passwords match
                     realm.commitTransaction();
                     realm.close();
-                    Intent intent = new Intent(Login.this, Display.class);
+                    /*Intent intent = new Intent(LoginActivity.this, Display.class);
                     intent.putExtra("USERNAME", str);
-                    startActivity(intent);
+                    startActivity(intent);*/
                     return;
                 } else {
                     //user found but passwords do not match
                     realm.commitTransaction();
                     realm.close();
-                    Toast.makeText(Login.this, "Invalid password. Please try again", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Invalid password. Please try again", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 /*if (pass.equals(password)) {
-                    Intent toy = new Intent(Login.this, Display.class);
+                    Intent toy = new Intent(LoginActivity.this, Display.class);
                     toy.putExtra("Username", str);
                     startActivity(toy);
                 } else {
-                    Toast temp = Toast.makeText(Login.this, "Username and Password don't match.Try again!", Toast.LENGTH_LONG);
+                    Toast temp = Toast.makeText(LoginActivity.this, "Username and Password don't match.Try again!", Toast.LENGTH_LONG);
                     temp.show();
                 }*/
             }
@@ -69,7 +68,7 @@ public class Login extends AppCompatActivity {
         but2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Login.this, Register.class);
+                Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(i);
             }
         });

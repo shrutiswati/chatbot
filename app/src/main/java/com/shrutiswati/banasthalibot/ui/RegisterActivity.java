@@ -1,15 +1,13 @@
-package com.shrutiswati.banasthalibot;
+package com.shrutiswati.banasthalibot.ui;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.shrutiswati.banasthalibot.db.BanasthaliBotRealmController;
+import com.shrutiswati.banasthalibot.R;
 import com.shrutiswati.banasthalibot.db.models.UserTable;
 
 import io.realm.Realm;
@@ -18,7 +16,7 @@ import io.realm.Realm;
  * Created by shruti suman on 1/14/2018.
  */
 
-public class Register extends Activity {
+public class RegisterActivity extends Activity {
     EditText mEtName;
     EditText mEtEmail;
     EditText mEtUsername;
@@ -39,7 +37,7 @@ public class Register extends Activity {
             public void onClick(View view) {
 
                 if (!mEtPassword.getText().toString().equals(mEtConfirmPassword.getText().toString())) {
-                    Toast.makeText(Register.this, "Passwords don't match.Try again!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Passwords don't match.Try again!", Toast.LENGTH_SHORT).show();
                 } else {
                     Realm realm = Realm.getDefaultInstance();
                     realm.beginTransaction();
@@ -51,7 +49,7 @@ public class Register extends Activity {
                     realm.copyToRealmOrUpdate(user);
                     realm.commitTransaction();
                     realm.close();
-                    Toast.makeText(Register.this, "Sucessfully registered. Please login with your new ID", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Sucessfully registered. Please login with your new ID", Toast.LENGTH_SHORT).show();
                     finish();
                 }
 
