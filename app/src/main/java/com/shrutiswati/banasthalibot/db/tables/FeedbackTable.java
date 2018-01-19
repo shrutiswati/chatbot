@@ -1,4 +1,4 @@
-package com.shrutiswati.banasthalibot.db.models;
+package com.shrutiswati.banasthalibot.db.tables;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;

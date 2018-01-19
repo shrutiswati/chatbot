@@ -1,7 +1,7 @@
 package com.shrutiswati.banasthalibot.db;
 
-import com.shrutiswati.banasthalibot.db.models.ChatTable;
-import com.shrutiswati.banasthalibot.db.models.UserTable;
+import com.shrutiswati.banasthalibot.db.tables.ChatTable;
+import com.shrutiswati.banasthalibot.db.tables.UserTable;
 
 import java.util.List;
 

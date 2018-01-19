@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.shrutiswati.banasthalibot.R;
-import com.shrutiswati.banasthalibot.db.models.UserTable;
+import com.shrutiswati.banasthalibot.db.tables.UserTable;
 
 import io.realm.Realm;
 

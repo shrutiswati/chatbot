@@ -9,6 +9,11 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.shrutiswati.banasthalibot.R;
+import com.shrutiswati.banasthalibot.helpers.BanasthaliBotUtils;
+
+import ai.api.android.AIConfiguration;
+import ai.api.android.AIDataService;
+import ai.api.model.AIRequest;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -16,6 +21,8 @@ public class HomeActivity extends AppCompatActivity {
     private ChatFragment mChatFragment;
     private SettingsFragment mSettingsFragment;
     private FeedbackFragment mFeedbackFragment;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,5 +67,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
 }
