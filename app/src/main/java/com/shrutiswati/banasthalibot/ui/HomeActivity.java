@@ -3,6 +3,7 @@ package com.shrutiswati.banasthalibot.ui;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -54,13 +55,19 @@ public class HomeActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.navigation_home:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fl_container, mChatFragment).commit();
+                        FragmentTransaction ftChat = getSupportFragmentManager().beginTransaction();
+                        ftChat.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+                        ftChat.replace(R.id.fl_container, mChatFragment).commit();
                         return true;
                     case R.id.navigation_feedback:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fl_container, mFeedbackFragment).commit();
+                        FragmentTransaction ftFeedback = getSupportFragmentManager().beginTransaction();
+                        ftFeedback.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+                        ftFeedback.replace(R.id.fl_container, mFeedbackFragment).commit();
                         return true;
                     case R.id.navigation_settings:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fl_container, mSettingsFragment).commit();
+                        FragmentTransaction ftSettings = getSupportFragmentManager().beginTransaction();
+                        ftSettings.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+                        ftSettings.replace(R.id.fl_container, mSettingsFragment).commit();
                         return true;
                 }
                 return false;
