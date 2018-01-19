@@ -41,9 +41,10 @@ public class LoginActivity extends AppCompatActivity {
                     //user found and passwords match
                     realm.commitTransaction();
                     realm.close();
-                    /*Intent intent = new Intent(LoginActivity.this, Display.class);
+                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                     intent.putExtra("USERNAME", str);
-                    startActivity(intent);*/
+                    startActivity(intent);
+                    finish();
                     return;
                 } else {
                     //user found but passwords do not match
@@ -52,15 +53,6 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Invalid password. Please try again", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                /*if (pass.equals(password)) {
-                    Intent toy = new Intent(LoginActivity.this, Display.class);
-                    toy.putExtra("Username", str);
-                    startActivity(toy);
-                } else {
-                    Toast temp = Toast.makeText(LoginActivity.this, "Username and Password don't match.Try again!", Toast.LENGTH_LONG);
-                    temp.show();
-                }*/
             }
 
 
