@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.shrutiswati.banasthalibot.R;
 import com.shrutiswati.banasthalibot.db.tables.UserTable;
+import com.shrutiswati.banasthalibot.helpers.BanasthaliBotPreferences;
 
 import io.realm.Realm;
 
@@ -41,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
                     //user found and passwords match
                     realm.commitTransaction();
                     realm.close();
+                    BanasthaliBotPreferences.getInstance(LoginActivity.this).setStringPreferences("username", str);
                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                     intent.putExtra("USERNAME", str);
                     startActivity(intent);

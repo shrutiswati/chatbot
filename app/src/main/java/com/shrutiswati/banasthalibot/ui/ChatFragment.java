@@ -19,10 +19,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shrutiswati.banasthalibot.R;
+import com.shrutiswati.banasthalibot.db.BanasthaliBotRealmController;
+import com.shrutiswati.banasthalibot.db.tables.ChatTable;
+import com.shrutiswati.banasthalibot.helpers.BanasthaliBotPreferences;
 import com.shrutiswati.banasthalibot.helpers.BanasthaliBotUtils;
 import com.shrutiswati.banasthalibot.models.ChatMessage;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ai.api.AIServiceException;
 import ai.api.android.AIConfiguration;
@@ -30,6 +34,7 @@ import ai.api.android.AIDataService;
 import ai.api.model.AIRequest;
 import ai.api.model.AIResponse;
 import ai.api.model.Result;
+import io.realm.RealmCollection;
 
 
 /**
@@ -45,13 +50,24 @@ public class ChatFragment extends Fragment {
     private AIRequest aiRequest;
     private AIDataService aiDataService;
 
-    public ArrayList<ChatMessage> mChatList;
+    public List<ChatMessage> mChatList;
     ChatAdapter mChatAdapter;
+
+    private String userID;
 
     public ChatFragment() {
         // Required empty public constructor
     }
 
+    private void populatePreviousChatMessages(){
+        /*List<ChatTable> previousMessages = BanasthaliBotRealmController.getInstance().getAllChatMessages(userID);
+        mChatList = new ArrayList<>();
+        if(previousMessages != null){
+            for(ChatTable dbMessage : previousMessages){
+                mChatList.add(new ChatMessage(dbMessage.getMessage(), Long.parseLong(dbMessage.getTimestamp()), dbMessage.getMessageOwner()));
+            }
+        }*/
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -117,8 +133,11 @@ public class ChatFragment extends Fragment {
         mETComposer = (EditText)getView().findViewById(R.id.et_chat_composer);
         mIVSend = (ImageView)getView().findViewById(R.id.iv_send_button);
 
-        mChatList = new ArrayList<>();
+        userID = BanasthaliBotPreferences.getInstance(getContext()).getStringPreferences("username");
+
+        mChatList = BanasthaliBotRealmController.getInstance().getAllChatMessages(userID);
         mChatAdapter = new ChatAdapter();
+
     }
 
     class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.VHChatAdapter>{
@@ -201,5 +220,6 @@ public class ChatFragment extends Fragment {
         mChatList.add(msg);
         mChatAdapter.notifyItemInserted(mChatList.size() - 1);
         mRVChat.scrollToPosition(mChatList.size() - 1);
+        BanasthaliBotRealmController.getInstance().insertChatMessageToDB(msg, userID);
     }
 }
