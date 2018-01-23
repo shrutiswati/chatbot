@@ -1,8 +1,11 @@
 package com.shrutiswati.banasthalibot.ui;
 
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.shrutiswati.banasthalibot.R;
 import com.shrutiswati.banasthalibot.db.BanasthaliBotRealmController;
@@ -35,6 +39,8 @@ import ai.api.model.AIRequest;
 import ai.api.model.AIResponse;
 import ai.api.model.Result;
 import io.realm.RealmCollection;
+
+import static android.app.Activity.RESULT_OK;
 
 
 /**
@@ -57,16 +63,6 @@ public class ChatFragment extends Fragment {
 
     public ChatFragment() {
         // Required empty public constructor
-    }
-
-    private void populatePreviousChatMessages(){
-        /*List<ChatTable> previousMessages = BanasthaliBotRealmController.getInstance().getAllChatMessages(userID);
-        mChatList = new ArrayList<>();
-        if(previousMessages != null){
-            for(ChatTable dbMessage : previousMessages){
-                mChatList.add(new ChatMessage(dbMessage.getMessage(), Long.parseLong(dbMessage.getTimestamp()), dbMessage.getMessageOwner()));
-            }
-        }*/
     }
 
     @Override
@@ -121,7 +117,7 @@ public class ChatFragment extends Fragment {
                     insertMessage(mETComposer.getText().toString(), BanasthaliBotUtils.CHAT_USER);
                     new APIAIAsyncTask(mETComposer.getText().toString().trim()).execute();
                 } else {
-                    //voice stuff here
+                    promptSpeechInput();
                 }
                 mETComposer.setText("");
             }
@@ -222,4 +218,55 @@ public class ChatFragment extends Fragment {
         mRVChat.scrollToPosition(mChatList.size() - 1);
         BanasthaliBotRealmController.getInstance().insertChatMessageToDB(msg, userID);
     }
+
+    //region speech stuff
+    /**
+     * Showing google speech input dialog
+     * */
+    private void promptSpeechInput() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
+        intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS, 100);
+        intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLIS, 100);
+        intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, 100);
+        intent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true);
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Ask a Question");
+        try {
+            startActivityForResult(intent, BanasthaliBotUtils.REQ_CODE_SPEECH_INPUT);
+        } catch (ActivityNotFoundException a) {
+            Log.e("ASK_AI", a.getMessage());
+            Toast.makeText(getActivity(),
+                    "We're sorry but speech input is not supported on your device",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Receiving speech input
+     * */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case BanasthaliBotUtils.REQ_CODE_SPEECH_INPUT: {
+                if (resultCode == RESULT_OK && null != data) {
+
+                    ArrayList<String> result = data
+                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    String res = "";
+                    try {
+                        res = result.get(0).substring(0, 1).toUpperCase() + result.get(0).substring(1);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    mETComposer.setText(res);
+                    mETComposer.setSelection(mETComposer.getText().length());
+                }
+                break;
+            }
+        }
+    }
+    //endregion
 }
