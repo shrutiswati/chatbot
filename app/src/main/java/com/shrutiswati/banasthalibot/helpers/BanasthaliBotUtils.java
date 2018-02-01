@@ -10,5 +10,4 @@ public class BanasthaliBotUtils {
     public static final String CHAT_USER = "USER";
     public static final String CHAT_BOT = "BOT";
     public static final int REQ_CODE_SPEECH_INPUT = 1000;
-public static final string s="hello world";
 }
