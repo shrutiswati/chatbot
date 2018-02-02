@@ -14,7 +14,7 @@ import io.realm.Realm;
 import io.realm.RealmModel;
 
 /**
- * Created by Rohit Gupta on 15/1/18.
+ * Created by Shruti Suman on 15/1/18.
  */
 
 public class BanasthaliBotRealmController {
