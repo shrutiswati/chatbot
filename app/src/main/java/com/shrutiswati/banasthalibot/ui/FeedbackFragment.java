@@ -1,21 +1,25 @@
 package com.shrutiswati.banasthalibot.ui;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.hsalf.smilerating.BaseRating;
 import com.hsalf.smilerating.SmileRating;
+import com.shrutiswati.banasthalibot.Feedback;
 import com.shrutiswati.banasthalibot.R;
 
 import static android.content.ContentValues.TAG;
@@ -27,6 +31,7 @@ import static android.content.ContentValues.TAG;
 
 public class FeedbackFragment extends Fragment {
 
+FloatingActionButton floatingActionButton;
 
     public FeedbackFragment() {
         // Required empty public constructor
@@ -39,11 +44,17 @@ public class FeedbackFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_feedback, container, false);
+        View view= inflater.inflate(R.layout.fragment_feedback, container, false);
+        FloatingActionButton button = (FloatingActionButton) view.findViewById(R.id.floating_action_bar);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent in=new Intent(getActivity(),Feedback.class);
+                startActivity(in);
+            }
+        });
 
-
-
-    }
+    return view;}
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {

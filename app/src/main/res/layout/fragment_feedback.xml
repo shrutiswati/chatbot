@@ -18,13 +18,15 @@
         android:layout_height="match_parent"></android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floating_action_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-       android:background="#2d3f96"
         android:layout_gravity="bottom|end"
         android:layout_margin="20dp"
-        app:fabSize="normal"
-        android:src="@drawable/ic_action_compose"/>
+        android:background="#2d3f96"
+        android:clickable="true"
+        android:src="@drawable/ic_action_compose"
+        app:fabSize="normal" />
 
     <com.hsalf.smilerating.SmileRating
         android:id="@+id/smile_rating"

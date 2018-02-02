@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.shrutiswati.banasthalibot">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".BanasthaliBotApplication"
@@ -22,7 +22,8 @@
         <activity android:name=".ui.RegisterActivity" />
         <activity
             android:name=".ui.HomeActivity"
-            android:label="@string/title_activity_home"/>
+            android:label="@string/title_activity_home" />
+        <activity android:name=".Feedback"></activity>
     </application>
 
 </manifest>
