@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.hsalf.smilerating.SmileRating;
 import com.shrutiswati.banasthalibot.R;
 import com.shrutiswati.banasthalibot.db.tables.UserTable;
 import com.shrutiswati.banasthalibot.helpers.BanasthaliBotPreferences;
@@ -20,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        SmileRating smileRating = (SmileRating) findViewById(R.id.smile_rating);
         Button but1 = (Button) findViewById(R.id.button);
         Button but2 = (Button) findViewById(R.id.button2);
         but1.setOnClickListener(new View.OnClickListener() {
