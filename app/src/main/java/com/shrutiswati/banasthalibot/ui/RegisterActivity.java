@@ -50,7 +50,7 @@ public class RegisterActivity extends Activity {
                 EditText b = (EditText) findViewById(R.id.registeremail);
                 String str1 = a.getText().toString();
                 UserTable User = realm.where(UserTable.class).equalTo("userName", str).findFirst();
-                UserTable Users = realm.where(UserTable.class).equalTo("emailID", str1).findFirst();
+                UserTable Users = realm.where(UserTable.class).equalTo("emailId", str1).findFirst();
                 if(mEtName.getText().toString().isEmpty() || mEtUsername.getText().toString().isEmpty()|| mEtPassword.getText().toString().isEmpty() || mEtConfirmPassword.getText().toString().isEmpty()|| mEtEmail.getText().toString().isEmpty()  )
                 {
                     Toast.makeText(RegisterActivity.this, "No field must be empty.Try again!", Toast.LENGTH_SHORT).show();
@@ -69,18 +69,12 @@ public class RegisterActivity extends Activity {
                 }
                 else if(User.equals(mEtUsername.getText().toString()))
                 {
-                    realm.commitTransaction();
-                    realm.close();
                     Toast.makeText(RegisterActivity.this, "Username already exists.Choose another!", Toast.LENGTH_SHORT).show();
-                    return;
                 }
 
                 else if(Users.equals(mEtEmail.getText().toString()))
                 {
-                    realm.commitTransaction();
-                    realm.close();
                     Toast.makeText(RegisterActivity.this, "This E-mail id has already been taken.Choose another!", Toast.LENGTH_SHORT).show();
-                    return;
                 }
                  else {
 
@@ -94,7 +88,8 @@ public class RegisterActivity extends Activity {
                     Toast.makeText(RegisterActivity.this, "Sucessfully registered. Please login with your new ID", Toast.LENGTH_SHORT).show();
                     finish();
                 }
-
+                realm.commitTransaction();
+                realm.close();
             }
 
         });
