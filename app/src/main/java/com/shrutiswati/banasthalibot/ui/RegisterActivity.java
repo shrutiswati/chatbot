@@ -70,6 +70,9 @@ public class RegisterActivity extends Activity {
                                             user.setUserName(mEtUsername.getText().toString());
                                             realm.copyToRealmOrUpdate(user);
                                             Toast.makeText(RegisterActivity.this, "Sucessfully registered. Please login with your new ID", Toast.LENGTH_SHORT).show();
+                                            realm.commitTransaction();
+                                            realm.close();
+                                            finish();
                                             return;
                                         }
                                     }
