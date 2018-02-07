@@ -1,15 +1,39 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/container_settings"
-    tools:context="com.shrutiswati.banasthalibot.ui.SettingsFragment">
+    tools:context="com.shrutiswati.banasthalibot.ui.SettingsFragment"
+    android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="settings fragment" />
 
-</FrameLayout>
+    <Button
+        android:id="@+id/clear_chat_history"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Clear chat history" />
+
+    <Button
+        android:id="@+id/about_us1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onButtonClick"
+        android:orientation="vertical"
+        android:text="About us" />
+
+    <Button
+        android:id="@+id/background_color1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:text="Change background color" />
+
+    <Button
+        android:id="@+id/shruti"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onButtonClick"
+        android:text="Logout" />
+
+</LinearLayout>

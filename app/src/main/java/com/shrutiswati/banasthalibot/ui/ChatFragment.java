@@ -1,7 +1,10 @@
 package com.shrutiswati.banasthalibot.ui;
 
 
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,6 +18,9 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -69,6 +75,7 @@ public class ChatFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_chat, container, false);
+
     }
 
     @Override
@@ -97,7 +104,7 @@ public class ChatFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(mETComposer.getText().length() > 0){
+                if (mETComposer.getText().length() > 0) {
                     mIVSend.setImageResource(R.drawable.ic_send_white_24dp);
                 } else {
                     mIVSend.setImageResource(R.drawable.ic_mic_white_24dp);
@@ -113,7 +120,7 @@ public class ChatFragment extends Fragment {
         mIVSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mETComposer.getText().length() > 0){
+                if (mETComposer.getText().length() > 0) {
                     insertMessage(mETComposer.getText().toString(), BanasthaliBotUtils.CHAT_USER);
                     new APIAIAsyncTask(mETComposer.getText().toString().trim()).execute();
                 } else {
@@ -125,9 +132,9 @@ public class ChatFragment extends Fragment {
     }
 
     private void initVars() {
-        mRVChat = (RecyclerView)getView().findViewById(R.id.rv_chat);
-        mETComposer = (EditText)getView().findViewById(R.id.et_chat_composer);
-        mIVSend = (ImageView)getView().findViewById(R.id.iv_send_button);
+        mRVChat = (RecyclerView) getView().findViewById(R.id.rv_chat);
+        mETComposer = (EditText) getView().findViewById(R.id.et_chat_composer);
+        mIVSend = (ImageView) getView().findViewById(R.id.iv_send_button);
 
         userID = BanasthaliBotPreferences.getInstance(getContext()).getStringPreferences("username");
 
@@ -136,7 +143,7 @@ public class ChatFragment extends Fragment {
 
     }
 
-    class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.VHChatAdapter>{
+    class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.VHChatAdapter> {
         @Override
         public VHChatAdapter onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chat_message, parent, false);
@@ -145,7 +152,7 @@ public class ChatFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(VHChatAdapter holder, int position) {
-            if(mChatList.get(position).getSentBy().equals(BanasthaliBotUtils.CHAT_USER)){
+            if (mChatList.get(position).getSentBy().equals(BanasthaliBotUtils.CHAT_USER)) {
                 holder.leftText.setVisibility(View.GONE);
                 holder.rightText.setVisibility(View.VISIBLE);
                 holder.rightText.setText(mChatList.get(position).getMessage());
@@ -161,12 +168,13 @@ public class ChatFragment extends Fragment {
             return mChatList.size();
         }
 
-        class VHChatAdapter extends RecyclerView.ViewHolder{
-            TextView leftText,rightText;
+        class VHChatAdapter extends RecyclerView.ViewHolder {
+            TextView leftText, rightText;
+
             public VHChatAdapter(View itemView) {
                 super(itemView);
-                leftText = (TextView)itemView.findViewById(R.id.leftText);
-                rightText = (TextView)itemView.findViewById(R.id.rightText);
+                leftText = (TextView) itemView.findViewById(R.id.leftText);
+                rightText = (TextView) itemView.findViewById(R.id.rightText);
             }
         }
     }
@@ -183,7 +191,7 @@ public class ChatFragment extends Fragment {
         @Override
         protected AIResponse doInBackground(AIRequest... aiRequests) {
             try {
-                if(!TextUtils.isEmpty(query)) {
+                if (!TextUtils.isEmpty(query)) {
                     aiRequest.setQuery(query);
                 }
                 return aiDataService.request(aiRequest);
@@ -192,6 +200,7 @@ public class ChatFragment extends Fragment {
             }
             return null;
         }
+
         @Override
         protected void onPostExecute(AIResponse response) {
             if (response != null) {
@@ -210,7 +219,7 @@ public class ChatFragment extends Fragment {
         aiRequest = new AIRequest();
     }
 
-    private void insertMessage(String message, String sentBy){
+    private void insertMessage(String message, String sentBy) {
         long millis = System.currentTimeMillis();
         ChatMessage msg = new ChatMessage(message, millis, sentBy);
         mChatList.add(msg);
@@ -220,9 +229,10 @@ public class ChatFragment extends Fragment {
     }
 
     //region speech stuff
+
     /**
      * Showing google speech input dialog
-     * */
+     */
     private void promptSpeechInput() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -244,7 +254,7 @@ public class ChatFragment extends Fragment {
 
     /**
      * Receiving speech input
-     * */
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -268,5 +278,50 @@ public class ChatFragment extends Fragment {
             }
         }
     }
+
     //endregion
+   /* public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    public boolean onCreateOptionMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.About_us:
+                Intent intent = new Intent(getContext(), AboutUs.class);
+                startActivity(intent);
+                break;
+            case  R.id.Logout:
+                AlertDialog.Builder a_builder=new AlertDialog.Builder(getActivity().getApplicationContext());
+                a_builder.setMessage("Are you sure you want to logout?").setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(getContext(), LoginActivity.class);
+                        startActivity(intent);
+                    }
+                })
+                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                     @Override
+                     public void onClick(DialogInterface dialogInterface, int i) {
+                         dialogInterface.cancel();
+
+                     }
+                 });
+                AlertDialog alert =a_builder.create();
+                alert.setTitle("Alert!");
+                alert.show();
+                    break;
+
+
+        }
+        return true;
+    }*/
+
 }

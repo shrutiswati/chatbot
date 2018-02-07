@@ -58,11 +58,11 @@ public class RegisterActivity extends Activity {
                 }
                 else
                 {
-                    if (islength(mEtPassword.getText().toString())) {
-                        if (validatePassword(mEtPassword.getText().toString())) {
-                            if (samePassword()) {
-                                if (unique(User)) {
-                                    if (unique(Users)) {
+                    if (unique(User)) {
+                        if (islength(mEtPassword.getText().toString())){
+                            if (isvalidatePassword(mEtPassword.getText().toString())) {
+                                if (samePassword()) {
+                                    if (uniques(Users)) {
                                         if (isValidEmaillId(mEtEmail.getText().toString())) {
                                             user.setFullName(mEtName.getText().toString());
                                             user.setEmailId(mEtEmail.getText().toString());
@@ -75,20 +75,60 @@ public class RegisterActivity extends Activity {
                                             finish();
                                             return;
                                         }
+                                        else{
+                                            realm.commitTransaction();
+                                            realm.close();
+                                            Toast.makeText(getApplicationContext(), "InValid Email Address.", Toast.LENGTH_SHORT).show();
+                                            return;
+                                        }
+
                                     }
+                                    else
+                                    {
+                                        realm.commitTransaction();
+                                        realm.close();
+                                        Toast.makeText(RegisterActivity.this, "Email-id already exists.Choose another!", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+                                }
+                                else{
+                                    realm.commitTransaction();
+                                    realm.close();
+                                    Toast.makeText(getApplicationContext(), "Passwords do not match.", Toast.LENGTH_SHORT).show();
+                                    return;
                                 }
 
                             }
+                            else{
+                                realm.commitTransaction();
+                                realm.close();
+                                Toast.makeText(getApplicationContext(), "Password must have an uppercase letter,a lowercase letter,a digit and a special character", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
                         }
+                        else{
+                            realm.commitTransaction();
+                            realm.close();
+                            Toast.makeText(getApplicationContext(), "Password must be 8 characters long.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                    else
+                    {
+
+                            realm.commitTransaction();
+                            realm.close();
+                            Toast.makeText(RegisterActivity.this, "Username already exists.Choose another!", Toast.LENGTH_SHORT).show();
+                            return;
+
+
                     }
 
 
 
 
                 }
-                realm.commitTransaction();
-                realm.close();
-                finish();
+
 
             }
 
@@ -122,8 +162,11 @@ public class RegisterActivity extends Activity {
         {
             return true;
         }
-        Toast.makeText(getApplicationContext(), "InValid Email Address.", Toast.LENGTH_SHORT).show();
-        return false;
+        else {
+
+
+            return false;
+        }
 
     }
 
@@ -131,7 +174,15 @@ public class RegisterActivity extends Activity {
         if (userTable == null)
             return true;
         else {
-            Toast.makeText(RegisterActivity.this, "Entered field already exists.Choose another!", Toast.LENGTH_SHORT).show();
+
+            return false;
+        }
+    }
+    public boolean uniques(UserTable userTable) {
+        if (userTable == null)
+            return true;
+        else {
+
             return false;
         }
     }
@@ -140,7 +191,7 @@ public class RegisterActivity extends Activity {
         if (validatePassword(s)) {
             return true;
         } else {
-            Toast.makeText(getApplicationContext(), "Password must have an uppercase letter,a lowercase letter,a digit and a special character", Toast.LENGTH_SHORT).show();
+
             return false;
         }
     }
@@ -165,7 +216,7 @@ public class RegisterActivity extends Activity {
 
     public boolean islength(String s) {
         if (mEtPassword.getText().toString().length() < 8) {
-            Toast.makeText(getApplicationContext(), "Password must be 8 characters long.", Toast.LENGTH_SHORT).show();
+
             return false;
         }
         return true;
@@ -181,7 +232,7 @@ public class RegisterActivity extends Activity {
         if (mEtPassword.getText().toString().equals(mEtConfirmPassword.getText().toString())) {
             return true;
         } else {
-            Toast.makeText(getApplicationContext(), "Passwords do not match.", Toast.LENGTH_SHORT).show();
+
             return false;
         }
     }
