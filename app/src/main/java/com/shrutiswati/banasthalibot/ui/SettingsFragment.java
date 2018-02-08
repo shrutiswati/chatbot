@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -19,6 +20,8 @@ import android.widget.Toast;
 import com.shrutiswati.banasthalibot.R;
 import com.shrutiswati.banasthalibot.db.tables.ChatTable;
 import com.shrutiswati.banasthalibot.db.tables.UserTable;
+import com.shrutiswati.banasthalibot.helpers.BanasthaliBotPreferences;
+import com.thebluealliance.spectrum.SpectrumDialog;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -31,11 +34,25 @@ public class SettingsFragment extends Fragment {
    Button b1,b2,b3,b4;
 
 
-
     public SettingsFragment() {
         // Required empty public constructor
     }
 
+    private void showColorPicker(){
+        new SpectrumDialog.Builder(getContext())
+                .setColors(R.array.demo_colors)
+                .setSelectedColorRes(R.color.colorAccent)
+                .setDismissOnColorSelected(true)
+                .setOutlineWidth(2)
+                .setOnColorSelectedListener(new SpectrumDialog.OnColorSelectedListener() {
+                    @Override public void onColorSelected(boolean positiveResult, @ColorInt int color) {
+                        if (positiveResult) {
+                            BanasthaliBotPreferences.getInstance(getActivity()).setStringPreferences("BG", "#" + Integer.toHexString(color).toUpperCase());
+                            return;
+                        }
+                    }
+                }).build().show(getFragmentManager(), "color_picker");
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,7 +82,7 @@ public class SettingsFragment extends Fragment {
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                showColorPicker();
             }
         });
         b3.setOnClickListener(new View.OnClickListener() {

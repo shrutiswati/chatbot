@@ -36,4 +36,6 @@ dependencies {
     compile 'ai.api:sdk:2.0.7@aar'
     compile 'ai.api:libai:1.6.11'
 
+    compile 'com.thebluealliance:spectrum:0.7.1'
+
 }

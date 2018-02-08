@@ -6,6 +6,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -69,6 +70,17 @@ public class ChatFragment extends Fragment {
 
     public ChatFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        String color = BanasthaliBotPreferences.getInstance(getActivity()).getStringPreferences("BG");
+        if(!TextUtils.isEmpty(color)){
+            if(mRVChat!= null){
+                mRVChat.setBackgroundColor(Color.parseColor(color));
+            }
+        }
     }
 
     @Override
